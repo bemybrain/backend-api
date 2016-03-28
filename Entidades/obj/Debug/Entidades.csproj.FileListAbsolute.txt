@@ -1,0 +1,5 @@
+D:\MeusProjetos\BeMyBrain_Teste\Entidades\bin\Debug\Entidades.dll
+D:\MeusProjetos\BeMyBrain_Teste\Entidades\bin\Debug\Entidades.pdb
+D:\MeusProjetos\BeMyBrain_Teste\Entidades\obj\Debug\Entidades.dll
+D:\MeusProjetos\BeMyBrain_Teste\Entidades\obj\Debug\Entidades.pdb
+D:\MeusProjetos\BeMyBrain_Teste\Entidades\obj\Debug\Entidades.csprojResolveAssemblyReference.cache

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfUsuario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Usuario>
+    <Id>2</Id>
+    <Nome>hgjhjhg</Nome>
+    <Sobrenome>ghjghjghjhg</Sobrenome>
+    <Email>jghjgjghj</Email>
+    <Login>ghjghjghj</Login>
+    <Senha>asdf</Senha>
+    <InstituicaoEnsino>ghjghjghj</InstituicaoEnsino>
+  </Usuario>
+</ArrayOfUsuario>
