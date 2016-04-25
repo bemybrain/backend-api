@@ -11,7 +11,7 @@ var userSchema = new mongoose.Schema({
   username: String,
   interests: [ { type: 'ObjectId', ref: 'Tag', require: false, index: true } ],
   picture: String,
-  rule: String
+  admin: Boolean
 })
 
 // Return model

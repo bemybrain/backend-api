@@ -2,9 +2,11 @@
 var express = require('express')
 var mongoose = require('mongoose')
 var bodyParser = require('body-parser')
+var config = require('./config')
 
 // MongoDB
-mongoose.connect('mongodb://localhost/bemybrain-api')
+var port = process.env.PORT || 3000
+mongoose.connect(config.database)
 
 // Express
 var app = express()
@@ -15,5 +17,5 @@ app.use(bodyParser.json())
 app.use('/api', require('./routes/api'))
 
 // Start server
-app.listen(3000)
-console.log('API is running on port 3000')
+app.listen(port)
+console.log('API is running on port ' + port)
