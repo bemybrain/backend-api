@@ -4,11 +4,21 @@ var mongoose = restful.mongoose
 
 // Schema
 var userSchema = new mongoose.Schema({
-  firstname: String,
-  lastname: String,
-  email: String,
-  password: String,
-  username: String,
+  name: String,
+  email: {
+    type: String,
+    unique: true,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  username: {
+    type: String,
+    unique: true,
+    required: true
+  },
   interests: [ { type: 'ObjectId', ref: 'Tag', require: false, index: true } ],
   picture: String,
   admin: Boolean
