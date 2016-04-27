@@ -1,7 +1,7 @@
 // Dependencies
-var restful = require('node-restful')
 var mongoose = require('mongoose')
 var Schema = mongoose.Schema
+var bcrypt = require('bcrypt-nodejs')
 
 // Schema
 var userSchema = new Schema({
@@ -24,6 +24,17 @@ var userSchema = new Schema({
   picture: String,
   admin: Boolean
 })
+
+// methods ======================
+// generating a hash
+userSchema.methods.generateHash = function (password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+}
+
+// checking if password is valid
+userSchema.methods.validPassword = function (password) {
+  return bcrypt.compareSync(password, this.password)
+}
 
 // Return model
 module.exports = mongoose.model('User', userSchema)
