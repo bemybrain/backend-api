@@ -33,23 +33,38 @@ var comparePassword = function (req, res, next) {
 }
 
 // Routes
-User.methods(['get', 'put', 'delete', {
-  method: 'post',
-  before: hashPassword
-}])
-User.register(router, '/users')
+User
+  .methods([
+    'get',
+    'put',
+    'delete',
+    { method: 'post', before: hashPassword }
+  ])
+  .register(router, '/users')
 
-Question.methods(['get', 'put', 'post', 'delete'])
-Question.register(router, '/questions')
+Question
+  .methods([
+    'get', 'put', 'post', 'delete'
+  ])
+  .register(router, '/questions')
 
-Answer.methods(['get', 'put', 'post', 'delete'])
-Answer.register(router, '/answers')
+Answer
+  .methods([
+    'get', 'put', 'post', 'delete'
+  ])
+  .register(router, '/answers')
 
-Tag.methods(['get', 'put', 'post', 'delete'])
-Tag.register(router, '/tags')
+Tag
+  .methods([
+    'get', 'put', 'post', 'delete'
+  ])
+  .register(router, '/tags')
 
-Notification.methods(['get', 'put', 'post', 'delete'])
-Notification.register(router, '/notifications')
+Notification
+  .methods([
+    'get', 'put', 'post', 'delete'
+  ])
+  .register(router, '/notifications')
 
 // Return router
 module.exports = router

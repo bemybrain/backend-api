@@ -1,9 +1,10 @@
 // Dependencies
 var restful = require('node-restful')
-var mongoose = restful.mongoose
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
 
 // Schema
-var notificationSchema = new mongoose.Schema({
+var notificationSchema = new Schema({
   type: String,
   body: String,
   from: { type: 'ObjectId', ref: 'User', require: true },
@@ -12,4 +13,4 @@ var notificationSchema = new mongoose.Schema({
 })
 
 // Return model
-module.exports = restful.model('Notification', notificationSchema)
+module.exports = mongoose.model('Notification', notificationSchema)

@@ -1,9 +1,10 @@
 // Dependencies
 var restful = require('node-restful')
-var mongoose = restful.mongoose
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
 
 // Schema
-var userSchema = new mongoose.Schema({
+var userSchema = new Schema({
   name: String,
   email: {
     type: String,
@@ -25,4 +26,4 @@ var userSchema = new mongoose.Schema({
 })
 
 // Return model
-module.exports = restful.model('User', userSchema)
+module.exports = mongoose.model('User', userSchema)

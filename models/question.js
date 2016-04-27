@@ -1,9 +1,10 @@
 // Dependencies
 var restful = require('node-restful')
-var mongoose = restful.mongoose
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
 
 // Schema
-var questionSchema = new mongoose.Schema({
+var questionSchema = new Schema({
   title: String,
   body: String,
   date: { type: Date, default: Date.now },
@@ -14,4 +15,4 @@ var questionSchema = new mongoose.Schema({
 })
 
 // Return model
-module.exports = restful.model('Question', questionSchema)
+module.exports = mongoose.model('Question', questionSchema)
