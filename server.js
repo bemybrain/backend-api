@@ -4,12 +4,11 @@ var mongoose = require('mongoose')
 var bodyParser = require('body-parser')
 var cookieParser = require('cookie-parser')
 var session = require('express-session')
-var config = require('./config')
+var config = require('./config/config')
 var passport = require('passport')
 
 // MongoDB
-var port = process.env.PORT || 3000
-mongoose.connect(config.database)
+mongoose.connect(config.db)
 
 // Express
 var app = express()
@@ -24,7 +23,7 @@ app.use(function (req, res, next) {
 
 // Passport
 require('./passport')(passport)
-app.use(session({ secret: config.secret }))
+app.use(session({ secret: config.auth.token.secret }))
 app.use(passport.initialize())
 app.use(passport.session())
 
@@ -37,5 +36,7 @@ app.use(config.endpoint + '/users', user)
 app.use(config.endpoint + '/questions', question)
 
 // Start server
-app.listen(port)
-console.log('API is running on port ' + port)
+app.listen(config.port, config.server_ip_address, function () {
+  console.log('Listening on ' + config.server_ip_address + ', server_port ' + config.port)
+  console.log(process.env.NODE_ENV)
+})
