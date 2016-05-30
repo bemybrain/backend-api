@@ -1,6 +1,5 @@
 var express = require('express')
 var router = express.Router()
-var bcrypt = require('bcrypt')
 var Question = require('../models/question')
 
 // GET /questions
@@ -15,7 +14,7 @@ var getQuestions = function (req, res) {
 }
 
 // GET /questions/:id
-var getQuestionsById = function (req, res) {
+var getQuestionById = function (req, res) {
   Question.findById(req.params.id, function (err, question) {
     if (err) {
       console.log('Error: ' + err)
@@ -74,7 +73,7 @@ var deleteQuestion = function (req, res) {
 }
 
 router.get('/', getQuestions)
-router.get('/:id', getQuestionsById)
+router.get('/:id', getQuestionById)
 router.post('/', addQuestion)
 router.put('/:id', updateQuestion)
 router.delete('/:id', deleteQuestion)

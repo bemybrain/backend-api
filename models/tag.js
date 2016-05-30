@@ -1,5 +1,4 @@
 // Dependencies
-var restful = require('node-restful')
 var mongoose = require('mongoose')
 var Schema = mongoose.Schema
 

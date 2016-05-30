@@ -32,9 +32,14 @@ app.use(passport.session())
 var routes = require('./routes/index')(passport)
 var user = require('./routes/user')
 var question = require('./routes/question')
+var answer = require('./routes/answer')
+var tag = require('./routes/tag')
+
 app.use(config.endpoint + '/', routes)
 app.use(config.endpoint + '/users', user)
 app.use(config.endpoint + '/questions', question)
+app.use(config.endpoint + '/answers', answer)
+app.use(config.endpoint + '/tags', tag)
 
 // Start server
 app.listen(config.port, config.server_ip_address, function () {

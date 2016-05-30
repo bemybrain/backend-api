@@ -25,20 +25,6 @@ var getUserById = function (req, res) {
   })
 }
 
-// POST /users
-var addUser = function (req, res, next) {
-  var newUser = new User(req.body)
-  newUser.save(function (err) {
-    if (err) {
-      console.log('Error: ' + err)
-      next(err)
-    } else {
-      res.send(newUser)
-      next(newUser)
-    }
-  })
-}
-
 // PUT /users/:id
 var updateUser = function (req, res) {
   User.findById(req.params.id, function (err, user) {
@@ -78,7 +64,6 @@ var deleteUser = function (req, res) {
 
 router.get('/', getUsers)
 router.get('/:id', getUserById)
-router.post('/', addUser)
 router.put('/:id', updateUser)
 router.delete('/:id', deleteUser)
 
