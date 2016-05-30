@@ -22,13 +22,14 @@ app.use(function (req, res, next) {
 })
 
 // Passport
-require('./passport')(passport)
+var initPassport = require('./passport/init')
+initPassport(passport)
 app.use(session({ secret: config.auth.token.secret }))
 app.use(passport.initialize())
 app.use(passport.session())
 
 // Routes
-var routes = require('./routes/index')
+var routes = require('./routes/index')(passport)
 var user = require('./routes/user')
 var question = require('./routes/question')
 app.use(config.endpoint + '/', routes)

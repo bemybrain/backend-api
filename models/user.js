@@ -22,7 +22,10 @@ var userSchema = new Schema({
   },
   interests: [ { type: 'ObjectId', ref: 'Tag', require: false, index: true } ],
   picture: String,
-  admin: Boolean
+  admin: {
+    type: Boolean,
+    default: false
+  }
 })
 
 // methods ======================
