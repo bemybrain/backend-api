@@ -28,6 +28,7 @@ var getUserById = function (req, res) {
 // PUT /users/:id
 var updateUser = function (req, res) {
   User.findById(req.params.id, function (err, user) {
+    console.log(user)
     if (err) {
       console.log('Error: ' + err)
     } else {
@@ -35,7 +36,7 @@ var updateUser = function (req, res) {
       user.email = req.body.email
       user.username = req.body.username
       user.interests = req.body.interests
-      user.picture = req.body.picture
+      // user.picture = req.body.picture
       user.save(function (err) {
         if (err) {
           console.log('Error: ' + err)
@@ -62,9 +63,17 @@ var deleteUser = function (req, res) {
   })
 }
 
+var auth = function (req, res, next) {
+  if (req.isAuthenticated()) {
+    next()
+  } else {
+    res.sendStatus(401)
+  }
+}
+
 router.get('/', getUsers)
 router.get('/:id', getUserById)
-router.put('/:id', updateUser)
+router.put('/:id', auth, updateUser)
 router.delete('/:id', deleteUser)
 
 module.exports = router
