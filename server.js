@@ -6,25 +6,45 @@ var cookieParser = require('cookie-parser')
 var session = require('express-session')
 var config = require('./config/config')
 var passport = require('passport')
+var initPassport = require('./passport/init')
+var MongoStore = require('connect-mongo')(session)
+var cors = require('cors')
 
 // MongoDB
 mongoose.connect(config.db)
 
 // Express
 var app = express()
-app.use(bodyParser.urlencoded({ extended: true }))
+var whitelist = ['http://localhost:9000']; // Acceptable domain names. ie: https://www.example.com
+var corsOptions = {
+  credentials: true,
+  origin: function (origin, callback) {
+    var originIsWhitelisted = whitelist.indexOf(origin) !== -1
+    callback(null, originIsWhitelisted)
+  // callback(null, true); uncomment this and comment the above to allow all
+  }
+}
+
+// Enable CORS
+app.use(cors(corsOptions))
+// Enable CORS Pre-Flight
+app.options('*', cors(corsOptions))
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-  next()
-})
 
 // Passport
-var initPassport = require('./passport/init')
+app.use(session({
+  secret: config.auth.token.secret,
+  saveUninitialized: false,
+  resave: false,
+  // using store session on MongoDB using express-session + connect
+  store: new MongoStore({
+    url: config.db,
+    collection: 'sessions'
+  })
+}))
 initPassport(passport)
-app.use(session({ secret: config.auth.token.secret }))
 app.use(passport.initialize())
 app.use(passport.session())
 

@@ -4,29 +4,39 @@ var Question = require('../models/question')
 
 // GET /questions
 var getQuestions = function (req, res) {
-  Question.find(function (err, questions) {
-    if (err) {
-      console.log('Error: ' + err)
-    } else {
-      res.send(questions)
-    }
-  })
+  Question
+    .find(req.query)
+    .populate(['author'])
+    .exec(function (err, questions) {
+      if (err) {
+        console.log('Error: ' + err)
+      } else {
+        res.send(questions)
+      }
+    })
 }
 
 // GET /questions/:id
 var getQuestionById = function (req, res) {
-  Question.findById(req.params.id, function (err, question) {
-    if (err) {
-      console.log('Error: ' + err)
-    } else {
-      res.send(question)
-    }
-  })
+  Question
+    .findById(req.params.id)
+    .populate(['author'])
+    .exec(function (err, question) {
+      if (err) {
+        console.log('Error: ' + err)
+      } else {
+        res.send(question)
+      }
+    })
 }
 
 // POST /questions
 var addQuestion = function (req, res) {
-  var newQuestion = new Question(req.body)
+  var newQuestion = new Question()
+  newQuestion.title = req.body.title
+  newQuestion.body = req.body.body
+  newQuestion.author = req.body.author
+  newQuestion.tags = req.body.tags
   newQuestion.save(function (err) {
     if (err) {
       console.log('Error: ' + err)
@@ -72,10 +82,18 @@ var deleteQuestion = function (req, res) {
   })
 }
 
+var auth = function (req, res, next) {
+  if (req.isAuthenticated()) {
+    next()
+  } else {
+    res.send(401)
+  }
+}
+
 router.get('/', getQuestions)
 router.get('/:id', getQuestionById)
-router.post('/', addQuestion)
-router.put('/:id', updateQuestion)
-router.delete('/:id', deleteQuestion)
+router.post('/', auth, addQuestion)
+router.put('/:id', auth, updateQuestion)
+router.delete('/:id', auth, deleteQuestion)
 
 module.exports = router

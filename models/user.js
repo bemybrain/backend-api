@@ -2,6 +2,8 @@
 var mongoose = require('mongoose')
 var Schema = mongoose.Schema
 var bcrypt = require('bcrypt-nodejs')
+var passport = require('passport')
+var passportLocalMongoose = require('passport-local-mongoose')
 
 // Schema
 var userSchema = new Schema({
@@ -20,13 +22,15 @@ var userSchema = new Schema({
     unique: true,
     required: true
   },
-  interests: [ { type: 'ObjectId', ref: 'Tag', require: false, index: true } ],
+  interests: [String],
   picture: String,
   admin: {
     type: Boolean,
     default: false
   }
 })
+
+userSchema.plugin(passportLocalMongoose)
 
 // methods ======================
 // generating a hash

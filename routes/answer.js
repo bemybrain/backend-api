@@ -1,16 +1,21 @@
 var express = require('express')
 var router = express.Router()
 var Answer = require('../models/answer')
+var passport = require('passport')
+var mongoose = require('mongoose')
 
 // GET /answers
 var getAnswers = function (req, res) {
-  Answer.find(function (err, answers) {
-    if (err) {
-      console.log('Error: ' + err)
-    } else {
-      res.send(answers)
-    }
-  })
+  Answer
+    .find(req.query)
+    .populate(['author'])
+    .exec(function (err, answers) {
+      if (err) {
+        console.log('Error: ' + err)
+      } else {
+        res.send(answers)
+      }
+    })
 }
 
 // GET /answers/:id
@@ -26,7 +31,10 @@ var getAnswerById = function (req, res) {
 
 // POST /answers
 var addAnswer = function (req, res) {
-  var newAnswer = new Answer(req.body)
+  var newAnswer = new Answer()
+  newAnswer.body = req.body.body
+  newAnswer.author = mongoose.Types.ObjectId(req.body.author)
+  newAnswer.question = mongoose.Types.ObjectId(req.body.question)
   newAnswer.save(function (err) {
     if (err) {
       console.log('Error: ' + err)
@@ -74,10 +82,18 @@ var deleteAnswer = function (req, res) {
   })
 }
 
+var auth = function (req, res, next) {
+  if (req.isAuthenticated()) {
+    next()
+  } else {
+    res.sendStatus(401)
+  }
+}
+
 router.get('/', getAnswers)
 router.get('/:id', getAnswerById)
-router.post('/', addAnswer)
-router.put('/:id', updateAnswer)
-router.delete('/:id', deleteAnswer)
+router.post('/', auth, addAnswer)
+router.put('/:id', auth, updateAnswer)
+router.delete('/:id', auth, deleteAnswer)
 
 module.exports = router
