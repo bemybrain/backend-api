@@ -4,6 +4,7 @@ var Question = require('../models/question')
 
 // GET /questions
 var getQuestions = function (req, res) {
+  console.log('questions!!!!!!');
   Question
     .find(req.query)
     .populate(['author'])
