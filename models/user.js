@@ -15,14 +15,15 @@ var userSchema = new Schema({
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    select: false
   },
   username: {
     type: String,
     unique: true,
     required: true
   },
-  interests: [String],
+  tags: [ { type: 'ObjectId', ref: 'Tag' } ],
   picture: String,
   admin: {
     type: Boolean,

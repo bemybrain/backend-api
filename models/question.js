@@ -13,10 +13,9 @@ var questionSchema = new Schema({
     required: true
   },
   date: { type: Date, default: Date.now },
-  tags: [String],
   status: { type: String, default: 'open' },
-  author: { type: 'ObjectId', ref: 'User', require: true },
-  answers: [ { type: 'ObjectId', ref: 'Questions' } ]
+  tags: [ { type: 'ObjectId', ref: 'Tag' } ],
+  author: { type: 'ObjectId', ref: 'User', require: true }
 })
 
 // Return model

@@ -7,7 +7,10 @@ module.exports = function (passport) {
     passReqToCallback: true
   }, function (req, username, password, done) {
     // check in mongo if a user with username exists or not
-    User.findOne({ 'username': username }, function (err, user) {
+    User
+    .findOne({ 'username': username })
+    .select('+password')
+    .exec(function (err, user) {
       // In case of any error, return using the done method
       if (err) return done(err)
       // Username does not exist, log the error and redirect back
@@ -22,10 +25,8 @@ module.exports = function (passport) {
       }
       // User and password both match, return user from done method
       // which will be treated like success
-      console.log(user)
       return done(null, user)
-    }
-    )
+    })
   }))
 
   var isValidPassword = function (user, password) {

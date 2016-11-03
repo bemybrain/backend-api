@@ -8,7 +8,7 @@ var mongoose = require('mongoose')
 var getAnswers = function (req, res) {
   Answer
     .find(req.query)
-    .populate(['author'])
+    .populate('author', '-password')
     .exec(function (err, answers) {
       if (err) {
         console.log('Error: ' + err)

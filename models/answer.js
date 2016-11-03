@@ -7,9 +7,9 @@ var answerSchema = new Schema({
   body: String,
   author: { type: 'ObjectId', ref: 'User', required: true },
   question: { type: 'ObjectId', ref: 'Question', required: true },
+  date: { type: Date, default: Date.now },
   upvotes: Number,
   downvotes: Number,
-  date: { type: Date, default: Date.now },
   score: Number
 })
 
