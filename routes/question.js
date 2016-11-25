@@ -72,7 +72,9 @@ var updateQuestion = function (req, res) {
       console.log('Error: ' + err)
       res.send(err)
     } else {
-      res.send(question)
+      question.populate(['author', 'tags'], function (err) {
+        res.send(question)
+      })
     }
   })
 }
@@ -110,6 +112,7 @@ function updateQuestionTags (question, newTags, callback) {
     var tagIds = _.map(tags, function (t) { return String(t._id) })
     newTags = _.intersection(tagIds, newTags)
     question.tags = newTags
+    console.log(question.tags);
     callback(question)
   })
 }
