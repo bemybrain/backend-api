@@ -15,13 +15,12 @@ mongoose.connect(config.db)
 
 // Express
 var app = express()
-var whitelist = ['http://localhost:9000']; // Acceptable domain names. ie: https://www.example.com
+// var whitelist = ['http://localhost:9000', 'http://192.168.43.192:9000']; // Acceptable domain names. ie: https://www.example.com
 var corsOptions = {
   credentials: true,
   origin: function (origin, callback) {
-    var originIsWhitelisted = whitelist.indexOf(origin) !== -1
-    callback(null, originIsWhitelisted)
-  // callback(null, true); uncomment this and comment the above to allow all
+    // var originIsWhitelisted = whitelist.indexOf(origin) !== -1
+    callback(null, true)
   }
 }
 

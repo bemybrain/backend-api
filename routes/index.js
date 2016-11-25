@@ -18,6 +18,7 @@ module.exports = function (passport) {
   router.post('/login', passport.authenticate('login'), function (req, res, next) {
     req.session.save(function (err) {
       if (err) {
+        console.log(err);
         return next(err)
       }
       res.send(req.user)

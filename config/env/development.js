@@ -1,6 +1,6 @@
 module.exports = {
   endpoint: '/api',
-  db: 'mongodb://localhost/bemybrain-api',
+  db: 'mongodb://bemybrain:bmb102030@ds019956.mlab.com:19956/bemybrain',
   port: 3000,
   auth: {
     password: {

@@ -10,6 +10,7 @@ module.exports = function (passport) {
     User
     .findOne({ 'username': username })
     .select('+password')
+    .populate(['tags'])
     .exec(function (err, user) {
       // In case of any error, return using the done method
       if (err) return done(err)

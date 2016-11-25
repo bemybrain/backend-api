@@ -39,7 +39,9 @@ var updateUser = function (req, res) {
       console.log('Error: ' + err)
       res.send(err)
     } else {
-      res.send(user)
+      user.populate('tags', function (err) {
+        res.send(user)
+      })
     }
   })
 }
@@ -70,6 +72,7 @@ var auth = function (req, res, next) {
 }
 
 function updateUserTags (user, newTags, callback) {
+  console.log(newTags);
   Tags.find(function (err, tags) {
     if (err) return callback(err)
     var tagIds = _.map(tags, function (t) { return String(t._id) })
