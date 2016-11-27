@@ -32,7 +32,6 @@ var getQuestionById = function (req, res) {
       if (err) {
         console.log('Error: ' + err)
       } else {
-        Notifications.questionCreated(question)
         res.send(question)
       }
     })
