@@ -3,6 +3,7 @@ var express = require('express')
 var router = express.Router()
 var Question = require('../models/question')
 var Tags = require('../models/tag')
+var Notifications = require('../notifications')
 
 // GET /questions
 var getQuestions = function (req, res) {
@@ -31,6 +32,7 @@ var getQuestionById = function (req, res) {
       if (err) {
         console.log('Error: ' + err)
       } else {
+        Notifications.questionCreated(question)
         res.send(question)
       }
     })
@@ -55,6 +57,7 @@ var addQuestion = function (req, res) {
       if (req.body.tags && req.body.tags.length) {
         updateQuestionTags(newQuestion, req.body.tags, function (question) {
           question.save(function (err) {
+            Notifications.questionCreated()
             res.send(err ? err : newQuestion)
           })
         })
