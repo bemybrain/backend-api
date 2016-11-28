@@ -56,7 +56,7 @@ var addQuestion = function (req, res) {
       if (req.body.tags && req.body.tags.length) {
         updateQuestionTags(newQuestion, req.body.tags, function (question) {
           question.save(function (err) {
-            Notifications.questionCreated()
+            Notifications.questionCreated(question)
             res.send(err ? err : newQuestion)
           })
         })
