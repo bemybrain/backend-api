@@ -75,6 +75,7 @@ var updateQuestion = function (req, res) {
       res.send(err)
     } else {
       question.populate(['author', 'tags'], function (err) {
+        Notifications.questionCreated(question)
         res.send(question)
       })
     }

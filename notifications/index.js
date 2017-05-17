@@ -33,7 +33,10 @@ var questionCreated = function (question) {
 						return String(question.author._id) !== String(user._id)
 					})
 					userMails = _.map(userMails, 'email')
-					mailer.send(userMails.toString(), props)
+					console.log(userMails);
+					if (userMails.length) {
+						mailer.send(userMails.toString(), props)
+					}
 				}
 			})
 		}

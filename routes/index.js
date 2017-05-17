@@ -31,7 +31,11 @@ module.exports = function (passport) {
       if (err) {
         return next(err)
       }
-      res.send(req.user)
+      if (req.user) {
+        res.send(req.user)
+      } else {
+        res.send(401)
+      }
     })
   })
 

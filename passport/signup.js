@@ -8,7 +8,10 @@ module.exports = function (passport) {
   }, function (req, username, password, done) {
     findOrCreateUser = function () {
       // find a user in Mongo with provided username
-      User.findOne({ 'username': username }, function (err, user) {
+      User.findOne({ $or: [
+        { 'email': req.body.email },
+        { 'username': username }
+      ]}, function (err, user) {
         // In case of any error, return using the done method
         if (err) {
           console.log('Error in SignUp: ' + err)
@@ -16,7 +19,7 @@ module.exports = function (passport) {
         }
         // already exists
         if (user) {
-          console.log('User already exists with username: ' + username)
+          console.log('User already exists.')
           return done(null, false)
         } else {
           // if there is no user with that email
