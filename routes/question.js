@@ -7,12 +7,17 @@ var Notifications = require('../notifications')
 
 // GET /questions
 var getQuestions = function (req, res) {
-  var query = req.query
-  if (!query.status) {
-    query.status = 'open'
+  const { query } = req
+  const limit = query.limit ? eval(query.limit) : 10
+  const skip = query.skip ? eval(query.skip) : 0
+  const filter = {
+    status: query.status || 'open'
   }
   Question
-    .find(query)
+    .find(filter)
+    .sort('-date')
+    .skip(skip)
+    .limit(limit)
     .populate(['author', 'tags'])
     .exec(function (err, questions) {
       if (err) {
