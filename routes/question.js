@@ -58,18 +58,21 @@ var addQuestion = function (req, res) {
       console.log('Error: ' + err)
       res.send(err)
     } else {
-      if (req.body.tags && req.body.tags.length) {
-        updateQuestionTags(newQuestion, req.body.tags, function (question) {
-          question.save(function (err) {
-            Notifications.questionCreated(question)
-            res.send(err ? err : newQuestion)
-          })
-        })
-      } else {
-        res.send(newQuestion)
-      }
+      editQuestion(newQuestion._id, req.body, cb)
     }
   })
+
+  function cb (err, question) {
+    if (err) {
+      console.log('Error: ' + err)
+      res.send(err)
+    } else {
+      question.populate(['author', 'tags'], function (err) {
+        Notifications.questionCreated(question)
+        res.send(question)
+      })
+    }
+  }
 }
 
 // PUT /questions/:id
@@ -126,6 +129,7 @@ function updateQuestionTags (question, newTags, callback) {
 }
 
 function editQuestion (questionId, attr, callback) {
+  console.log(questionId);
   function save (q) {
     q.save(function (err) {
       callback(err || null, q)
