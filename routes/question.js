@@ -7,10 +7,10 @@ var Notifications = require('../notifications')
 
 // GET /questions
 var getQuestions = function (req, res) {
-  const { query } = req
-  const limit = query.limit ? eval(query.limit) : 10
-  const skip = query.skip ? eval(query.skip) : 0
-  const filter = {
+  var query = req.query
+  var limit = query.limit ? eval(query.limit) : 10
+  var skip = query.skip ? eval(query.skip) : 0
+  var filter = {
     status: query.status || 'open'
   }
   Question
