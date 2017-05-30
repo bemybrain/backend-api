@@ -11,8 +11,9 @@ var getQuestions = function (req, res) {
   var limit = query.limit ? eval(query.limit) : 10
   var skip = query.skip ? eval(query.skip) : 0
   var filter = {
-    status: query.status || 'open'
+    status: query.status || 'open',
   }
+  if (query.author) filter.author = query.author
   Question
     .find(filter)
     .sort('-date')
