@@ -4,6 +4,14 @@ var Answer = require('../models/answer')
 var passport = require('passport')
 var mongoose = require('mongoose')
 
+var auth = function (req, res, next) {
+  if (req.isAuthenticated()) {
+    next()
+  } else {
+    res.sendStatus(401)
+  }
+}
+
 // GET /answers
 var getAnswers = function (req, res) {
   Answer
@@ -50,12 +58,9 @@ var updateAnswer = function (req, res) {
     if (err) {
       console.log('Error: ' + err)
     } else {
-      body = req.body.body
-      author = req.body.author
-      upvotes = req.body.upvotes
-      downvotes = req.body.downvotes
-      date = req.body.date
-      score = req.body.score
+      answer.body = req.body.body
+      answer.author = req.body.author
+      answer.date = req.body.date
       answer.save(function (err) {
         if (err) {
           console.log('Error: ' + err)
@@ -82,18 +87,74 @@ var deleteAnswer = function (req, res) {
   })
 }
 
-var auth = function (req, res, next) {
-  if (req.isAuthenticated()) {
-    next()
-  } else {
-    res.sendStatus(401)
-  }
+// PUT /answers/:id/upvote
+var upvote = function (req, res) {
+  Answer.findById(req.params.id, function (err, answer) {
+    if (err) {
+      console.log('Error: ' + err)
+      res.send(err)
+    } else {
+      const userId = req.user._id
+      const upvotesIndex = answer.upvotes.indexOf(userId)
+      const downvotesIndex = answer.downvotes.indexOf(userId)
+      let hasUpvoted = upvotesIndex !== -1
+      let hasDownvoted = downvotesIndex !== -1
+      if (hasUpvoted) {
+        answer.upvotes.splice(upvotesIndex, 1)
+      } else {
+        if (hasDownvoted) {
+          answer.downvotes.splice(downvotesIndex, 1)
+        }
+        answer.upvotes.push(userId)
+      }
+      answer.save(function (err) {
+        if (err) {
+          console.log('Error: ' + err)
+        } else {
+          res.send(answer)
+        }
+      })
+    }
+  })
+}
+
+// PUT /answers/:id/downvote
+var downvote = function (req, res) {
+  Answer.findById(req.params.id, function (err, answer) {
+    if (err) {
+      console.log('Error: ' + err)
+      res.send(err)
+    } else {
+      const userId = req.user._id
+      const upvotesIndex = answer.upvotes.indexOf(userId)
+      const downvotesIndex = answer.downvotes.indexOf(userId)
+      let hasUpvoted = upvotesIndex !== -1
+      let hasDownvoted = downvotesIndex !== -1
+      if (hasDownvoted) {
+        answer.downvotes.splice(downvotesIndex, 1)
+      } else {
+        if (hasUpvoted) {
+          answer.upvotes.splice(upvotesIndex, 1)
+        }
+        answer.downvotes.push(userId)
+      }
+      answer.save(function (err) {
+        if (err) {
+          console.log('Error: ' + err)
+        } else {
+          res.send(answer)
+        }
+      })
+    }
+  })
 }
 
 router.get('/', getAnswers)
 router.get('/:id', getAnswerById)
 router.post('/', auth, addAnswer)
 router.put('/:id', auth, updateAnswer)
+router.put('/:id/upvote', auth, upvote)
+router.put('/:id/downvote', auth, downvote)
 router.delete('/:id', auth, deleteAnswer)
 
 module.exports = router

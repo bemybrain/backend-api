@@ -8,9 +8,8 @@ var answerSchema = new Schema({
   author: { type: 'ObjectId', ref: 'User', required: true },
   question: { type: 'ObjectId', ref: 'Question', required: true },
   date: { type: Date, default: Date.now },
-  upvotes: Number,
-  downvotes: Number,
-  score: Number
+  upvotes: [ { type: 'ObjectId', ref: 'User' } ],
+  downvotes: [ { type: 'ObjectId', ref: 'User' } ]
 })
 
 // Return model
