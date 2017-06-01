@@ -14,8 +14,10 @@ var questionSchema = new Schema({
   },
   date: { type: Date, default: Date.now },
   status: { type: String, default: 'open' },
+  author: { type: 'ObjectId', ref: 'User', require: true },
   tags: [ { type: 'ObjectId', ref: 'Tag' } ],
-  author: { type: 'ObjectId', ref: 'User', require: true }
+  upvotes: [ { type: 'ObjectId', ref: 'User' } ],
+  downvotes: [ { type: 'ObjectId', ref: 'User' } ]
 })
 
 // Return model

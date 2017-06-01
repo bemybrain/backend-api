@@ -151,10 +151,74 @@ function editQuestion (questionId, attr, callback) {
   })
 }
 
+// PUT /questions/:id/upvote
+var upvote = function (req, res) {
+  Question.findById(req.params.id, function (err, question) {
+    if (err) {
+      console.log('Error: ' + err)
+      res.send(err)
+    } else {
+      const userId = req.user._id
+      const upvotesIndex = question.upvotes.indexOf(userId)
+      const downvotesIndex = question.downvotes.indexOf(userId)
+      let hasUpvoted = upvotesIndex !== -1
+      let hasDownvoted = downvotesIndex !== -1
+      if (hasUpvoted) {
+        question.upvotes.splice(upvotesIndex, 1)
+      } else {
+        if (hasDownvoted) {
+          question.downvotes.splice(downvotesIndex, 1)
+        }
+        question.upvotes.push(userId)
+      }
+      question.save(function (err) {
+        if (err) {
+          console.log('Error: ' + err)
+        } else {
+          res.send(question)
+        }
+      })
+    }
+  })
+}
+
+// PUT /questions/:id/downvote
+var downvote = function (req, res) {
+  Question.findById(req.params.id, function (err, question) {
+    if (err) {
+      console.log('Error: ' + err)
+      res.send(err)
+    } else {
+      const userId = req.user._id
+      const upvotesIndex = question.upvotes.indexOf(userId)
+      const downvotesIndex = question.downvotes.indexOf(userId)
+      let hasUpvoted = upvotesIndex !== -1
+      let hasDownvoted = downvotesIndex !== -1
+      if (hasDownvoted) {
+        question.downvotes.splice(downvotesIndex, 1)
+      } else {
+        if (hasUpvoted) {
+          question.upvotes.splice(upvotesIndex, 1)
+        }
+        question.downvotes.push(userId)
+      }
+      question.save(function (err) {
+        if (err) {
+          console.log('Error: ' + err)
+        } else {
+          res.send(question)
+        }
+      })
+    }
+  })
+}
+
 router.get('/', getQuestions)
 router.get('/:id', getQuestionById)
 router.post('/', auth, addQuestion)
 router.put('/:id', auth, updateQuestion)
+router.put('/:id/upvote', auth, upvote)
+router.put('/:id/downvote', auth, downvote)
 router.delete('/:id', auth, deleteQuestion)
 
 module.exports = router
