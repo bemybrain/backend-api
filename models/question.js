@@ -17,7 +17,8 @@ var questionSchema = new Schema({
   author: { type: 'ObjectId', ref: 'User', require: true },
   tags: [ { type: 'ObjectId', ref: 'Tag' } ],
   upvotes: [ { type: 'ObjectId', ref: 'User' } ],
-  downvotes: [ { type: 'ObjectId', ref: 'User' } ]
+  downvotes: [ { type: 'ObjectId', ref: 'User' } ],
+  score: { type: Number, default: 0 }
 })
 
 // Return model

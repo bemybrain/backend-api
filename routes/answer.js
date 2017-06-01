@@ -16,6 +16,7 @@ var auth = function (req, res, next) {
 var getAnswers = function (req, res) {
   Answer
     .find(req.query)
+    .sort({ 'score': 'desc', 'date': 'desc' })
     .populate('author', '-password')
     .exec(function (err, answers) {
       if (err) {
@@ -107,6 +108,7 @@ var upvote = function (req, res) {
         }
         answer.upvotes.push(userId)
       }
+      answer.score = answer.upvotes.length - answer.downvotes.length
       answer.save(function (err) {
         if (err) {
           console.log('Error: ' + err)
@@ -138,6 +140,7 @@ var downvote = function (req, res) {
         }
         answer.downvotes.push(userId)
       }
+      answer.score = answer.upvotes.length - answer.downvotes.length
       answer.save(function (err) {
         if (err) {
           console.log('Error: ' + err)

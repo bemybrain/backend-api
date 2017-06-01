@@ -9,7 +9,8 @@ var answerSchema = new Schema({
   question: { type: 'ObjectId', ref: 'Question', required: true },
   date: { type: Date, default: Date.now },
   upvotes: [ { type: 'ObjectId', ref: 'User' } ],
-  downvotes: [ { type: 'ObjectId', ref: 'User' } ]
+  downvotes: [ { type: 'ObjectId', ref: 'User' } ],
+  score: { type: Number, default: 0 }
 })
 
 // Return model

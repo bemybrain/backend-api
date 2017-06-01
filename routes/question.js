@@ -16,7 +16,7 @@ var getQuestions = function (req, res) {
   if (query.author) filter.author = query.author
   Question
     .find(filter)
-    .sort('-date')
+    .sort({ 'score': 'desc', 'date': 'desc' })
     .skip(skip)
     .limit(limit)
     .populate(['author', 'tags'])
@@ -171,6 +171,7 @@ var upvote = function (req, res) {
         }
         question.upvotes.push(userId)
       }
+      question.score = question.upvotes.length - question.downvotes.length
       question.save(function (err) {
         if (err) {
           console.log('Error: ' + err)
@@ -202,6 +203,7 @@ var downvote = function (req, res) {
         }
         question.downvotes.push(userId)
       }
+      question.score = question.upvotes.length - question.downvotes.length
       question.save(function (err) {
         if (err) {
           console.log('Error: ' + err)
