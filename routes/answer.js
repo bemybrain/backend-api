@@ -94,11 +94,11 @@ var upvote = function (req, res) {
       console.log('Error: ' + err)
       res.send(err)
     } else {
-      const userId = req.user._id
-      const upvotesIndex = answer.upvotes.indexOf(userId)
-      const downvotesIndex = answer.downvotes.indexOf(userId)
-      let hasUpvoted = upvotesIndex !== -1
-      let hasDownvoted = downvotesIndex !== -1
+      var userId = req.user._id
+      var upvotesIndex = answer.upvotes.indexOf(userId)
+      var downvotesIndex = answer.downvotes.indexOf(userId)
+      var hasUpvoted = upvotesIndex !== -1
+      var hasDownvoted = downvotesIndex !== -1
       if (hasUpvoted) {
         answer.upvotes.splice(upvotesIndex, 1)
       } else {
@@ -125,11 +125,11 @@ var downvote = function (req, res) {
       console.log('Error: ' + err)
       res.send(err)
     } else {
-      const userId = req.user._id
-      const upvotesIndex = answer.upvotes.indexOf(userId)
-      const downvotesIndex = answer.downvotes.indexOf(userId)
-      let hasUpvoted = upvotesIndex !== -1
-      let hasDownvoted = downvotesIndex !== -1
+      var userId = req.user._id
+      var upvotesIndex = answer.upvotes.indexOf(userId)
+      var downvotesIndex = answer.downvotes.indexOf(userId)
+      var hasUpvoted = upvotesIndex !== -1
+      var hasDownvoted = downvotesIndex !== -1
       if (hasDownvoted) {
         answer.downvotes.splice(downvotesIndex, 1)
       } else {
