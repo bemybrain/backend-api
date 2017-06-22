@@ -10,7 +10,7 @@ var rankRules = [
   { type: 'researcher', q: 1, a: 1, s: 0 },
   { type: 'collaborator', q: 3, a: 5, s: 0 },
   { type: 'professor', q: 3, a: 15, s: 5 },
-  { type: 'specialist', q: 3, a: 30, s: 15}
+  { type: 'specialist', q: 3, a: 30, s: 15 }
 ]
 
 var auth = function (req, res, next) {
@@ -52,12 +52,20 @@ var getUserScore = function (answers) {
 }
 
 var getUserRank = function (q, a, s) {
-  var rank = _.findLastIndex(rankRules, function (rule) {
+  return _.findLastIndex(rankRules, function (rule) {
     return q >= rule.q &&
            a >= rule.a &&
            s >= rule.s
   })
-  return rankRules[rank].type
+}
+
+var setUserRank = function (userId, rank) {
+  User
+  .findById(userId)
+  .exec(function (err, user) {
+    user.rank = rank
+    user.save()
+  })
 }
 
 var getUpvotesCount = function (answers) {
@@ -108,6 +116,7 @@ var getDashboard = function (req, res) {
       var upvotesCount = getUpvotesCount(answers)
       var downvotesCount = getDownvotesCount(answers)
       var userScore = getUserScore(answers)
+      var userRank = getUserRank(questionsCount, answersCount, userScore)
       var output = {
         upvotes: upvotesCount,
         downvotes: downvotesCount,
@@ -115,9 +124,10 @@ var getDashboard = function (req, res) {
         questions: questionsCount,
         answers: answersCount,
         tags: getTagsCount(answers),
-        rank: getUserRank(questionsCount, answersCount, userScore)
+        rank: userRank
       }
       res.send(output)
+      setUserRank(userId, userRank)
     })
   })
 }

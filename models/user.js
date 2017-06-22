@@ -24,7 +24,8 @@ var userSchema = new Schema({
     required: true
   },
   tags: [ { type: 'ObjectId', ref: 'Tag' } ],
-  picture: String,
+  avatar: String,
+  rank: { type: Number, default: 0 },
   admin: {
     type: Boolean,
     default: false
