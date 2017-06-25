@@ -124,7 +124,8 @@ var getDashboard = function (req, res) {
         questions: questionsCount,
         answers: answersCount,
         tags: getTagsCount(answers),
-        rank: userRank
+        rank: userRank,
+        rules: rankRules
       }
       res.send(output)
       setUserRank(userId, userRank)
