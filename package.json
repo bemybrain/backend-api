@@ -14,7 +14,6 @@
     "body-parser": "^1.15.0",
     "connect-mongo": "^1.2.1",
     "cookie-parser": "^1.4.1",
-    "cors": "^2.7.1",
     "ejs": "^2.5.2",
     "email-templates": "^2.5.4",
     "express": "^4.13.4",

@@ -8,26 +8,23 @@ var config = require('./config/config')
 var passport = require('passport')
 var initPassport = require('./passport/init')
 var MongoStore = require('connect-mongo')(session)
-var cors = require('cors')
 
 // MongoDB
 mongoose.connect(config.db)
 
 // Express
 var app = express()
-// var whitelist = ['http://localhost:9000', 'http://192.168.43.192:9000']; // Acceptable domain names. ie: https://www.example.com
-var corsOptions = {
-  credentials: true,
-  origin: function (origin, callback) {
-    // var originIsWhitelisted = whitelist.indexOf(origin) !== -1
-    callback(null, true)
-  }
-}
 
 // Enable CORS
-app.use(cors(corsOptions))
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", req.headers.origin);
+  res.header("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+  res.header("Access-Control-Allow-Methods", "GET,HEAD,POST,PUT,DELETE,OPTIONS");
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
+
 // Enable CORS Pre-Flight
-app.options('*', cors(corsOptions))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
