@@ -3,27 +3,27 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "node server.js"
+    "start": "npm install && node server.js"
   },
   "main": "server.js",
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "async": "^2.1.4",
+    "async": "2.1.4",
     "bcrypt-nodejs": "0.0.3",
-    "body-parser": "^1.15.0",
-    "connect-mongo": "^1.2.1",
-    "cookie-parser": "^1.4.1",
-    "ejs": "^2.5.2",
-    "email-templates": "^2.5.4",
-    "express": "^4.13.4",
-    "express-session": "^1.13.0",
+    "body-parser": "1.15.0",
+    "connect-mongo": "1.2.1",
+    "cookie-parser": "1.4.1",
+    "ejs": "2.5.2",
+    "email-templates": "2.5.4",
+    "express": "4.13.4",
+    "express-session": "1.13.0",
     "lodash": "4.16.6",
-    "mongoose": "^4.4.11",
-    "nodemailer": "^2.6.4",
-    "nodemailer-smtp-transport": "^2.7.2",
-    "passport": "^0.3.2",
-    "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^4.0.0"
+    "mongoose": "4.4.11",
+    "nodemailer": "2.6.4",
+    "nodemailer-smtp-transport": "2.7.2",
+    "passport": "0.3.2",
+    "passport-local": "1.0.0",
+    "passport-local-mongoose": "4.0.0"
   }
 }

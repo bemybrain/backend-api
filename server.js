@@ -60,7 +60,6 @@ app.use(config.endpoint + '/tags', tag)
 app.use(config.endpoint + '/dashboard', dashboard)
 
 // Start server
-app.listen(config.port, config.server_ip_address, function () {
-  console.log('Listening on ' + config.server_ip_address + ', server_port ' + config.port)
-  console.log(process.env.NODE_ENV)
+app.listen(config.port, function () {
+  console.log(process.env.NODE_ENV + ', Listening on server port ' + config.port)
 })

@@ -1,8 +1,7 @@
 module.exports = {
-  endpoint: '/api',
-  db: process.env.OPENSHIFT_MONGODB_DB_URL + 'api',
-  port: process.env.OPENSHIFT_NODEJS_PORT || 8080,
-  server_ip_address: process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1',
+  endpoint: '',
+  db: 'mongodb://bemybrain:bmb102030@ds019956.mlab.com:19956/bemybrain',
+  port: 80,
   auth: {
     password: {
       saltWorkFactor: 10
