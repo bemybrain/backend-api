@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "npm install && node server.js"
+    "start": "node server.js"
   },
   "main": "server.js",
   "author": "",
