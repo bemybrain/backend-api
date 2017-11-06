@@ -25,6 +25,17 @@ module.exports = function (passport) {
     })
   })
 
+  /* Handle Facebook Login POST */
+  router.post('/fblogin', passport.authenticate('fblogin'), function (req, res, next) {
+    req.session.save(function (err) {
+      if (err) {
+        console.log(err);
+        return next(err)
+      }
+      res.send(req.user)
+    })
+  })
+
   /* Handle Registration POST */
   router.post('/signup', passport.authenticate('signup'), function (req, res, next) {
     req.session.save(function (err) {
@@ -34,7 +45,7 @@ module.exports = function (passport) {
       if (req.user) {
         res.send(req.user)
       } else {
-        res.send(401)
+        res.sendStatus(401)
       }
     })
   })
@@ -42,7 +53,7 @@ module.exports = function (passport) {
   /* Handle Logout */
   router.get('/logout', function (req, res) {
     req.logout()
-    res.send(200)
+    res.sendStatus(200)
   })
 
   return router
