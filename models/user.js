@@ -25,6 +25,7 @@ var userSchema = new Schema({
   },
   tags: [ { type: 'ObjectId', ref: 'Tag' } ],
   avatar: String,
+  fbId: String,
   rank: { type: Number, default: 0 },
   admin: {
     type: Boolean,

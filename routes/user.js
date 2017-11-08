@@ -95,7 +95,8 @@ function editUser (userId, attr, callback) {
     if (attr.name) user.name = attr.name
     if (attr.email) user.email = attr.email
     if (attr.username) user.username = attr.username
-    if (attr.picture) user.picture = attr.picture
+    if (attr.picture !== null) user.picture = attr.picture
+    if (attr.fbId !== null) user.fbId = attr.fbId
     if (attr.admin === true || attr.admin === false) user.admin = attr.admin
     if (attr.tags) {
       updateUserTags(user, attr.tags, save)
