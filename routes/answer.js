@@ -3,6 +3,7 @@ var router = express.Router()
 var Answer = require('../models/answer')
 var passport = require('passport')
 var mongoose = require('mongoose')
+var Notifications = require('../notifications')
 
 var auth = function (req, res, next) {
   if (req.isAuthenticated()) {
@@ -49,6 +50,9 @@ var addAnswer = function (req, res) {
       console.log('Error: ' + err)
     } else {
       res.send(newAnswer)
+      newAnswer.populate('question', function (err) {
+        Notifications.answerCreated(newAnswer.question)
+      })
     }
   })
 }

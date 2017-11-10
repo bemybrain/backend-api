@@ -13,13 +13,27 @@ var questionCreated = function (question) {
 				console.log('Error: ' + err)
 			} else {
 				var userIds = _.map(_users, function (u) { return String(u._id) })
-				// mailer.build(question, _users)
+				mailer.build(question, _users)
 				push.build('question_created', userIds, question)
 			}
 		})
 }
 
+var answerCreated = function (question) {
+	var tags = question.tags
+	User
+		.findById(question.author)
+		.exec(function (err, user) {
+			if (err) {
+				console.log('Error: ' + err)
+			} else {
+				push.build('answer_created', [user], question)
+			}
+		})
+}
+
 module.exports = {
+	answerCreated: answerCreated,
 	questionCreated: questionCreated
 }
 
