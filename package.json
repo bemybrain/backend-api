@@ -24,9 +24,9 @@
     "nodemailer": "2.6.4",
     "nodemailer-smtp-transport": "2.7.2",
     "passport": "0.3.2",
-    "passport-custom": "^1.0.5",
+    "passport-custom": "1.0.5",
     "passport-local": "1.0.0",
     "passport-local-mongoose": "4.0.0",
-    "web-push": "^3.2.4"
+    "web-push": "3.2.4"
   }
 }
